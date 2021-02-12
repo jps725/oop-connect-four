@@ -7,10 +7,16 @@ class Column {
 
   add(currentPlayer) {
     // currentPlayer 1 or 2
-    counter = 1;
-    this.indexes[this.indexes.length - counter] = currentPlayer;
+    // let counter = 1;
+    // this.indexes[this.indexes.length - counter] = currentPlayer;
 
-    counter++;
+    // counter++;
+    for (let index = 5; index >= 0; index--) {
+      if (this.indexes[index] === null) {
+        this.indexes[index] = currentPlayer;
+        break;
+      }
+    }
 
     // reference div id square-
     // counter = 1
@@ -25,13 +31,14 @@ class Column {
     // if array index has a 1 then player token is there
     // if array index has  2 then player token is there
     // rowIndexNum
-    if (this.indexes[rowIndexNum] === 1) {
-      Game.playInColumn();
-    } else if (this.indexes[rowIndexNum] === 2) {
-      Game.playInColumn;
-    } else {
-      return null;
-    }
+    // if (this.indexes[rowIndexNum] === 1) {
+    //   Game.playInColumn();
+    // } else if (this.indexes[rowIndexNum] === 2) {
+    //   Game.playInColumn();
+    // } else {
+    //   return null;
+    // }
+    return this.indexes[rowIndexNum];
   }
 }
 

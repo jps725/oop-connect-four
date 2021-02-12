@@ -10,6 +10,7 @@
 */
 
 import { Game } from "./game.js";
+import { Column } from "./column.js";
 
 let game = undefined;
 function updateUI() {
@@ -21,6 +22,28 @@ function updateUI() {
   } else {
     board.classList.remove("is-invisible");
     gameName.innerHTML = game.getName();
+
+    for (let rowIndex = 0; rowIndex <= 5; rowIndex++) {
+      for (let columnIndex = 0; columnIndex <= 6; columnIndex++) {
+        let square = document.getElementById(
+          `square-${rowIndex}-${columnIndex}`
+        );
+        square.innerHTML = "";
+        let playerNumber = game.getTokenAt(rowIndex, columnIndex);
+        if (playerNumber === 1) {
+          let tokenBlack = document.createElement("div");
+          tokenBlack.classList.add("token");
+          tokenBlack.classList.add("black");
+          square.appendChild(tokenBlack);
+        } else if (playerNumber === 2) {
+          let tokenRed = document.createElement("div");
+          tokenRed.classList.add("token");
+          tokenRed.classList.add("red");
+          square.appendChild(tokenRed);
+        }
+      }
+    }
+
     if (game.currentPlayer === 1) {
       clickTarget.classList.remove("red");
       clickTarget.classList.add("black");
@@ -56,7 +79,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
   let clickTarget = document.getElementById("click-targets");
   clickTarget.addEventListener("click", (event) => {
-    game.playInColumn();
+    // get the last char of the id string/ number.parseint to integer becomes column index
+    let colTarget = event.target.id;
+    let colIndex = Number.parseInt(colTarget[colTarget.length - 1]);
+
+    game.playInColumn(colIndex);
     updateUI();
   });
 });
