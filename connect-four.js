@@ -1,16 +1,4 @@
-/*
-
-//* check if a column is full (all spaces filled in column) --> if it is full, get id for that column and change class to "click-target full"
-
-//* if P1 turn, indicate via black token, P2 is red token
-      //* change class on the div target to be color of current player
-
-//* putting a token in a square creates a div set to the color and append that div to the square element when it drops in (black or red)
-
-*/
-
 import { Game } from "./game.js";
-import { Column } from "./column.js";
 
 let game = undefined;
 function updateUI() {
@@ -22,6 +10,16 @@ function updateUI() {
   } else {
     board.classList.remove("is-invisible");
     gameName.innerHTML = game.getName();
+
+    for (let columnIndex = 0; columnIndex <= 6; columnIndex++){
+      let fullColumn = game.isColumnFull(columnIndex)
+      let col = document.getElementById(`column-${columnIndex}`)
+      if (fullColumn) {
+        col.classList.add("full")
+      } else {
+        col.classList.remove("full")
+      }
+    }
 
     for (let rowIndex = 0; rowIndex <= 5; rowIndex++) {
       for (let columnIndex = 0; columnIndex <= 6; columnIndex++) {
