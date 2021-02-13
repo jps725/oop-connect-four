@@ -1,7 +1,7 @@
 import { Game } from "./game.js";
 
 let game = undefined;
-function updateUI() {
+function updateUI(colTarget) {
   let board = document.getElementById("board-holder");
   let gameName = document.getElementById("game-name");
   let clickTarget = document.getElementById("click-targets");
@@ -11,16 +11,15 @@ function updateUI() {
     board.classList.remove("is-invisible");
     gameName.innerHTML = game.getName();
 
-    for (let columnIndex = 0; columnIndex <= 6; columnIndex++){
-      let fullColumn = game.isColumnFull(columnIndex)
-      let col = document.getElementById(`column-${columnIndex}`)
+    for (let columnIndex = 0; columnIndex <= 6; columnIndex++) {
+      let fullColumn = game.isColumnFull(columnIndex);
+      let col = document.getElementById(`column-${columnIndex}`);
       if (fullColumn) {
-        col.classList.add("full")
+        col.classList.add("full");
       } else {
-        col.classList.remove("full")
+        col.classList.remove("full");
       }
     }
-
     for (let rowIndex = 0; rowIndex <= 5; rowIndex++) {
       for (let columnIndex = 0; columnIndex <= 6; columnIndex++) {
         let square = document.getElementById(
@@ -32,11 +31,13 @@ function updateUI() {
           let tokenBlack = document.createElement("div");
           tokenBlack.classList.add("token");
           tokenBlack.classList.add("black");
+          tokenBlack.classList.add("fall");
           square.appendChild(tokenBlack);
         } else if (playerNumber === 2) {
           let tokenRed = document.createElement("div");
           tokenRed.classList.add("token");
           tokenRed.classList.add("red");
+          tokenRed.classList.add("fall");
           square.appendChild(tokenRed);
         }
       }
@@ -82,6 +83,6 @@ window.addEventListener("DOMContentLoaded", () => {
     let colIndex = Number.parseInt(colTarget[colTarget.length - 1]);
 
     game.playInColumn(colIndex);
-    updateUI();
+    updateUI(colTarget);
   });
 });

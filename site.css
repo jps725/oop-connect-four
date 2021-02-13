@@ -97,7 +97,18 @@ main {
   margin: 5px;
   width: 65px;
 }
-
+.fall {
+  animation-name: fall-animation;
+  animation-duration: 500ms;
+}
+@keyframes fall-animation {
+  from {
+    transform: translateY(-500px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
 .token.red {
   background-color: red;
 }
