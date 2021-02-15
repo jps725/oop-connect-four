@@ -23,8 +23,7 @@ class Column {
     return this.indexes[rowIndexNum];
   }
   isFull() {
-    if (this.indexes[0] !== null)
-      return true
+    if (this.indexes[0] !== null) return true;
   }
 }
 

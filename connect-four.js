@@ -1,6 +1,16 @@
 import { Game } from "./game.js";
+// import { GameJsonDeserializer } from "./game-json-deserializer.js";
+import { GameJsonSerializer } from "./game-json-serializer.js";
 
 let game = undefined;
+// check to see if there's json in local storage with key
+// const json = window.localStorage.getItem("connect-four");
+// if (json) {
+//   // deserialized passed to game and update game
+//   const deserializer = new GameJsonDeserializer(json);
+//   game = deserializer.deserialize();
+//   updateUI();
+// }
 function updateUI(colTarget) {
   let board = document.getElementById("board-holder");
   let gameName = document.getElementById("game-name");
@@ -31,13 +41,11 @@ function updateUI(colTarget) {
           let tokenBlack = document.createElement("div");
           tokenBlack.classList.add("token");
           tokenBlack.classList.add("black");
-          tokenBlack.classList.add("fall");
           square.appendChild(tokenBlack);
         } else if (playerNumber === 2) {
           let tokenRed = document.createElement("div");
           tokenRed.classList.add("token");
           tokenRed.classList.add("red");
-          tokenRed.classList.add("fall");
           square.appendChild(tokenRed);
         }
       }
@@ -80,9 +88,16 @@ window.addEventListener("DOMContentLoaded", () => {
   clickTarget.addEventListener("click", (event) => {
     // get the last char of the id string/ number.parseint to integer becomes column index
     let colTarget = event.target.id;
-    let colIndex = Number.parseInt(colTarget[colTarget.length - 1]);
+    if (!colTarget.startsWith("column-")) return;
 
+    let colIndex = Number.parseInt(colTarget[colTarget.length - 1]);
     game.playInColumn(colIndex);
-    updateUI(colTarget);
+
+    // serializing
+    const serializer = new GameJsonSerializer(game);
+    const json = serializer.serialize();
+    window.localStorage.setItem("connect-four", json);
+
+    updateUI();
   });
 });
